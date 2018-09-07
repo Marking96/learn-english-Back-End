@@ -1,13 +1,20 @@
 package com.manutencao.learnenglish.models;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name="users")
@@ -27,12 +34,19 @@ public class User implements Serializable {
 	@Column
 	private String username;
 	
+	public User() {
+		addType(UserType.STUDENTY);
+	}
+
 	@Column
 	private String password;
-	
-	@Column
-	private UserType type;
 
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="type")
+	private Set<Integer> type = new HashSet<>();
+
+	
+	
 	public long getId() {
 		return id;
 	}
@@ -65,13 +79,12 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public UserType getType() {
-		return type;
-	}
-
-	public void setType(UserType type) {
-		this.type = type;
+	public Set<UserType> getType(){
+		return type.stream().map(x -> UserType.toEnum(x)).collect(Collectors.toSet());
 	}
 	
+	public void addType(UserType usertype) {
+		type.add(usertype.getCod());
+	}
 	
 }
