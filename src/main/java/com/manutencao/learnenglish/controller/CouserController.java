@@ -29,7 +29,7 @@ public class CouserController {
 	}
 	
 	@PostMapping("/couser")
-	public Couser saveCouser(@RequestBody Couser couser, @RequestBody long inst) {
+	public Couser saveCouser(@RequestBody Couser couser) {
 		return couserRepository.save(couser);
 	}
 
