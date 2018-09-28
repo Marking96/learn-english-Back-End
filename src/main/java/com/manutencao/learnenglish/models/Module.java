@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="modules")
@@ -29,7 +31,7 @@ public class Module implements Serializable{
 	private long id;
 	
 	@Column
-	private String name;
+	private String title;
 	
 	@OneToMany(mappedBy="modules", targetEntity=Lesson.class, fetch = FetchType.LAZY)
 	private List<Lesson> lessons;
@@ -37,6 +39,7 @@ public class Module implements Serializable{
 	@OneToMany(mappedBy="modules", targetEntity=Exercise.class, fetch = FetchType.LAZY)
 	private List<Exercise> exrcises;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="course_id")
 	private Couser couser;
@@ -51,12 +54,12 @@ public class Module implements Serializable{
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public List<Lesson> getLessons() {
@@ -73,6 +76,14 @@ public class Module implements Serializable{
 
 	public void setExrcises(List<Exercise> exrcises) {
 		this.exrcises = exrcises;
+	}
+
+	public Couser getCouser() {
+		return couser;
+	}
+
+	public void setCouser(Couser couser) {
+		this.couser = couser;
 	}
 	
 	

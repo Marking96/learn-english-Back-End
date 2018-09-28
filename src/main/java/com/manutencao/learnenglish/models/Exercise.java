@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="exercises")
 public class Exercise implements Serializable {
@@ -33,6 +35,7 @@ public class Exercise implements Serializable {
 	@OneToMany(mappedBy="exercise", targetEntity=Alternative.class, fetch = FetchType.LAZY)
 	private List<Alternative> alternatives;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="modules_id")
 	private Module modules;
@@ -61,6 +64,14 @@ public class Exercise implements Serializable {
 
 	public void setAlternatives(List<Alternative> alternatives) {
 		this.alternatives = alternatives;
+	}
+
+	public Module getModules() {
+		return modules;
+	}
+
+	public void setModules(Module modules) {
+		this.modules = modules;
 	}
 
 	
