@@ -26,6 +26,9 @@ public class Couser implements Serializable{
 	private long id;
 	
 	@Column
+	private String title;
+	
+	@Column
 	private int workload;
 	
 	@OneToMany(mappedBy="couser", targetEntity=Module.class, fetch = FetchType.LAZY)

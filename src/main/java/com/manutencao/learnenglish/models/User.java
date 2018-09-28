@@ -15,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name="users")
 public class User implements Serializable {
@@ -34,18 +33,6 @@ public class User implements Serializable {
 	@Column
 	private String username;
 	
-	public User(String name, String username, String password) {
-		super();
-		this.name = name;
-		this.username = username;
-		this.password = password;
-		addType(UserType.STUDENTY);
-	}
-
-	public User() {
-		addType(UserType.STUDENTY);
-	}
-
 	@Column
 	private String password;
 
@@ -53,7 +40,17 @@ public class User implements Serializable {
 	@CollectionTable(name="type")
 	private Set<Integer> type = new HashSet<>();
 
+	public User(String name, String username, String password) {
+		super();
+		this.name = name;
+		this.username = username;
+		this.password = password;
+		addType(UserType.STUDENTY);
+	}
 	
+	public User() {
+		addType(UserType.STUDENTY);
+	}
 	
 	public long getId() {
 		return id;

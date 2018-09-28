@@ -30,8 +30,8 @@ public class UserController {
 	}
 
 	@GetMapping("/users/{id}")
-	public List<User> listUserById(@PathVariable(value="id") long id){
-		return userRepository.findAll();	
+	public User listUserById(@PathVariable(value="id") long id){
+		return userRepository.findById(id);	
 	}
 	
 	@PostMapping("/users")
