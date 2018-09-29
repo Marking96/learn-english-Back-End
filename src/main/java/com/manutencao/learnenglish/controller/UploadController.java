@@ -1,5 +1,6 @@
 package com.manutencao.learnenglish.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.manutencao.learnenglish.models.FileUpload;
 import com.manutencao.learnenglish.repository.FileRepository;
 import com.manutencao.learnenglish.util.SaveUpload;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 @RestController
 @RequestMapping(value = "upload")
@@ -49,15 +51,6 @@ public class UploadController {
 
 	@GetMapping("/{filename}")
 	public ResponseEntity<Resource> getFile(@PathVariable String filename, HttpServletRequest request){
-		/**	 
-		FileUpload file = fileRepository.findByNameFile(filename);
-		
-		
-		 * return ResponseEntity.ok()
-				.contentType(MediaType.parseMediaType(file.getFileType()))
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=\"" + file.getNameFile() + "\"")
-				.body(new ByteArrayResource(file.getData()) );
-		 */
 		Resource resource = saveUpload.loadFileAsResource(filename);
 		String contetType = null;
 		try {
@@ -76,4 +69,5 @@ public class UploadController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
 	}
+
 }

@@ -26,7 +26,7 @@ public class SaveUpload {
 	private String directory;
 	
 	public String SaveinDirectory(MultipartFile arquivo) {
-		Path path = Paths.get(this.raiz,directory);
+		Path path = Paths.get(directory);
 		
 		Path filepath = path.resolve(arquivo.getOriginalFilename());
 
@@ -58,7 +58,7 @@ public class SaveUpload {
 	
 	public Resource loadFileAsResource(String filename) {
 		try {
-			Path path = Paths.get(this.raiz,this.directory);
+			Path path = Paths.get(this.directory);
 			Path filePath = path.resolve(filename).normalize();
 			System.out.println(filePath.toUri().toString());
 			Resource resource = new UrlResource(filePath.toUri());
