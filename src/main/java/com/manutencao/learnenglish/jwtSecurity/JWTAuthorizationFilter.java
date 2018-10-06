@@ -1,4 +1,4 @@
-package com.manutencao.learnenglish.security;
+package com.manutencao.learnenglish.jwtSecurity;
 
 import java.io.IOException;
 
