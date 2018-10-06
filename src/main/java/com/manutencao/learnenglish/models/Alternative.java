@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="alternatives")
 public class Alternative implements Serializable {
@@ -24,12 +26,13 @@ public class Alternative implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	@Column
+	@Column(unique = true, nullable= false)
 	private String title;
 	
 	@Column
 	private boolean isCorrect;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="exeexercise_id")
 	private Exercise exercise;
@@ -58,6 +61,14 @@ public class Alternative implements Serializable {
 
 	public void setCorrect(boolean isCorrect) {
 		this.isCorrect = isCorrect;
+	}
+
+	public Exercise getExercise() {
+		return exercise;
+	}
+
+	public void setExercise(Exercise exercise) {
+		this.exercise = exercise;
 	}
 	
 }
