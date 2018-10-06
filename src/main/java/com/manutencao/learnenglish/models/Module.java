@@ -16,6 +16,11 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * @author Marcelo Estevam
+ *
+ * @year 2018
+ */
 
 @Entity
 @Table(name="modules")

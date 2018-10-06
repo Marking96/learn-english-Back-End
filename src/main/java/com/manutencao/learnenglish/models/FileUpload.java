@@ -10,10 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * @author Marcelo Estevam
+ *
+ * @year 2018
+ */
 
 @Entity
 @Table(name="files")

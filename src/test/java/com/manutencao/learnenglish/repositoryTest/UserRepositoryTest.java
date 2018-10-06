@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -15,6 +16,8 @@ import com.manutencao.learnenglish.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+
 public class UserRepositoryTest {
 
 	@Autowired
@@ -26,11 +29,11 @@ public class UserRepositoryTest {
 	@Test
 	public void createUserPersistTest() {
 
-		User user = new User("marcelo", "marcelo", "123456");
+		User user = new User("marceloE", "marceloE", "123456");
 		this.repository.save(user);
 		assertThat(user.getId()).isNotNull();
-		assertThat(user.getName()).isEqualTo("marcelo");
-		assertThat(user.getUsername()).isEqualTo("marcelo");
+		assertThat(user.getName()).isEqualTo("marceloE");
+		assertThat(user.getUsername()).isEqualTo("marceloE");
 		assertThat(user.getPassword()).isNotNull();
 	}
 
@@ -57,7 +60,7 @@ public class UserRepositoryTest {
 
 	@Test
 	public void findusernameUserTest() {
-		User user = new User("marcelo", "marcelo", "123456");
+		User user = new User("marceloE", "marceloE", "123456");
 		this.repository.save(user);
 		assertThat(repository.findByUsername(user.getUsername())).isNotNull();
 	}

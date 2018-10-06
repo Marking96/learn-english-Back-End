@@ -12,6 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * @author Marcelo Estevam
+ *
+ * @year 2018
+ */
+
 @Entity
 @Table(name="cousers")
 public class Couser implements Serializable{

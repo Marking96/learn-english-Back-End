@@ -1,5 +1,11 @@
 package com.manutencao.learnenglish.models;
 
+/**
+ * @author Marcelo Estevam
+ *
+ * @year 2018
+ */
+
 public enum UserType {
 	
 	ADMIN(1, "ROLE_ADMIN"),

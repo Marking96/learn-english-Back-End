@@ -7,6 +7,6 @@ import com.manutencao.learnenglish.models.FileUpload;
 
 public interface FileRepository extends JpaRepository<FileUpload, Long> {
 	
-	@Transactional
-	FileUpload findByNameFile(String name);
+	//@Transactional
+	//FileUpload findByNameFile(String name);
 }

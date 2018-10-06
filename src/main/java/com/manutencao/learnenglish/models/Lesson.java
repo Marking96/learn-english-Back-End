@@ -11,6 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * @author Marcelo Estevam
+ *
+ * @year 2018
+ */
+
 @Entity
 @Table(name="lessons")
 public class Lesson implements Serializable {
