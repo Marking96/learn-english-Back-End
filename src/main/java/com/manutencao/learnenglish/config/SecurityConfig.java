@@ -1,5 +1,7 @@
 package com.manutencao.learnenglish.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +14,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.session.SessionManagementFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.manutencao.learnenglish.jwtSecurity.CorsFilter;
 import com.manutencao.learnenglish.jwtSecurity.JWTAuthenticationFilter;
 import com.manutencao.learnenglish.jwtSecurity.JWTAuthorizationFilter;
 import com.manutencao.learnenglish.jwtSecurity.JWTUtil;
@@ -36,29 +40,46 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JWTUtil jwtUtil;
 
-	private static final String[] PUBLIC_MATCHERS = { "/user",
+
+	private static final String[] PUBLIC_MATCHERS = { "/user", "/login"
 
 	};
-	private static final String[] PUBLIC_MATCHERS_POST = { "/user/users",
+	private static final String[] PUBLIC_MATCHERS_POST = { "/user/users", "/login"
 
 	};
+
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable();
-		http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll()
-				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll().anyRequest().authenticated();
+		http.csrf().disable();
 
+		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+		// CorsConfiguration configuration = new CorsConfiguration()
+		http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll()
+				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll().antMatchers(HttpMethod.OPTIONS, "/**")
+				.permitAll().anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
 		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
+		// http.addFilterBefore(new CorsFilter(), SessionManagementFilter.class);
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 	}
 
+	/*
+	 * @Bean CorsConfigurationSource configurationSource() { final
+	 * UrlBasedCorsConfigurationSource source = new
+	 * UrlBasedCorsConfigurationSource(); source.registerCorsConfiguration("/**",
+	 * new CorsConfiguration().applyPermitDefaultValues()); return source;
+	 * 
+	 * }
+	 */
 	@Bean
-	CorsConfigurationSource configurationSource() {
-		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("https://localhost:3000"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
 
