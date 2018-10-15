@@ -1,5 +1,6 @@
 package com.manutencao.learnenglish.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.manutencao.learnenglish.models.User;
 import com.manutencao.learnenglish.repository.UserRepository;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping(value="/user")
@@ -40,4 +43,8 @@ public class UserController {
 		user.setPassword(passwordEncode.encode(user.getPassword()));
 		return userRepository.save(user);
 	}
+    @GetMapping(value = "/video")
+    public void video (HttpServletResponse response) throws IOException {
+        response.sendRedirect("http://localhost:3001/movies/aula02.mp4");
+    }
 }

@@ -10,6 +10,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.manutencao.learnenglish.models.UserType;
 
+/**
+ * @author Marcelo Estevam
+ *
+ * @year 2018
+ */
+
 public class UserSecurity implements UserDetails {
 
 	/**
