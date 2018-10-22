@@ -39,41 +39,44 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private JWTUtil jwtUtil;
 
 
-	private static final String[] PUBLIC_MATCHERS = {  "/login","/upload/**"
+	private static final String[] PUBLIC_MATCHERS = {
+	        "/login",
+            "/upload/**"
 
 	};
-	private static final String[] PUBLIC_MATCHERS_POST = { "/user/users", "/login/"
-
+	private static final String[] PUBLIC_MATCHERS_POST = {
+	        "/login"
 	};
 
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests();
+		http.csrf().disable();
 
 		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
-		CorsConfiguration configuration = new CorsConfiguration();
+		//CorsConfiguration configuration = new CorsConfiguration();
+		//configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
 		http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll()
 				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
 		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
-		 http.addFilterBefore(new CorsFilter(), SessionManagementFilter.class);
+		 //http.addFilterBefore(new CorsFilter(), SessionManagementFilter.class);
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 	}
 
 		
-	 /* @Bean 
+	 @Bean
 	CorsConfigurationSource configurationSource() {
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
 		return source;
 
-	}*/
+	}
 	 
-	@Bean
+	/*@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList("*"));
@@ -84,7 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
-
+*/
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());

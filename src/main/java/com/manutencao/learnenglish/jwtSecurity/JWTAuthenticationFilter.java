@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-
-
 /**
  * @author Marcelo Estevam
  *
@@ -58,8 +56,8 @@ public class JWTAuthenticationFilter extends  UsernamePasswordAuthenticationFilt
         String username = ((UserSecurity) authResult.getPrincipal()).getUsername();
         String token = jwtUtil.generateToken(username);
         response.addHeader("Authorization", "Bearer " + token);
-        response.setHeader("Authorization", "Bearer " + token);
-        response.addHeader("username", username);
+        response.addHeader("access-control-expose-headers","Authorization");
+        response.getWriter().write("{\"token\":\""+token+"\"}");
     }
 
 }
