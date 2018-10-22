@@ -26,4 +26,9 @@ public class AuthService {
 
         userRepository.save(user);
     }
+
+    private String newPassword() {
+        // TODO create method for alter password
+        return null;
+    }
 }
